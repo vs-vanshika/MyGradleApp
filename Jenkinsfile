@@ -1,34 +1,43 @@
-pipeline {
-    agent any
+pipeline{
 
-    tools {
-        gradle 'Gradle'
-        jdk 'JDK'
-    }
+agent any
+tools{
+gradle 'Gradle'
+jdk 'JDK'
+}
 
-    stages {
+stages{
+stage ('Checkout'){
+steps{
+git url:'https://github.com/vs-vanshika/MyGradleApp.git'
+}
+}
+stage ('Build')
+{
+steps{
+sh 'gradle build'
+}
+}
 
-        stage('Build') {
-            steps {
-                sh 'gradle build'
-            }
-        }
+stage ('Test'){
+steps{
+sh 'gradle test'
+}
+}
 
-        stage('Test') {
-            steps {
-                sh 'gradle test'
-            }
-        }
+stage ('Run'){
+steps{
+sh 'gradle run'
+}
+}
+}
 
-        
-    }
-
-    post {
-        success {
-            echo 'Build successful!'
-        }
-        failure {
-            echo 'Build failed!'
-        }
-    }
+post{
+success{
+echo 'Build Success'
+}
+failure{
+echo 'Build failure'
+}
+}
 }
