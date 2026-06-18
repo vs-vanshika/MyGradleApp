@@ -15,6 +15,11 @@ steps {
 sh 'gradle test' // Run unit tests
 }
 }
+stage('Run') {
+steps {
+sh 'gradle run'
+}
+}
 }
 post {
 success {
